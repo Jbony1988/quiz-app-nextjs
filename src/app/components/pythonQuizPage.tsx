@@ -3,30 +3,21 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Quiz from './Quiz';
 import QuizResult from './QuizResult';
-import { javascriptQuestions } from '../data/javascriptQuestions';
+import { pythonQuestions } from '../data/data'
 
-export default function JavaScriptQuizPage() {
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+export default function PythonQuizPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
-  const currentSection = javascriptQuestions[currentSectionIndex];
-  const currentQuestion = currentSection.questions[currentQuestionIndex];
-
-  const handleAnswer = (event) => {
+  const handleAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (selectedOption === currentQuestion.answer) {
+    if (selectedOption === pythonQuestions[currentQuestionIndex].answer) {
       setCorrectAnswers(correctAnswers + 1);
     }
-
-    if (currentQuestionIndex < currentSection.questions.length - 1) {
+    if (currentQuestionIndex < pythonQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption('');
-    } else if (currentSectionIndex < javascriptQuestions.length - 1) {
-      setCurrentSectionIndex(currentSectionIndex + 1);
-      setCurrentQuestionIndex(0);
       setSelectedOption('');
     } else {
       setShowResult(true);
@@ -34,14 +25,7 @@ export default function JavaScriptQuizPage() {
   };
 
   // Calculate progress percentage
-  const totalQuestions = javascriptQuestions.reduce((acc, section) => acc + section.questions.length, 0);
-  const answeredQuestions =
-    javascriptQuestions
-      .slice(0, currentSectionIndex)
-      .reduce((acc, section) => acc + section.questions.length, 0) +
-    currentQuestionIndex +
-    1;
-  const progress = (answeredQuestions / totalQuestions) * 100;
+  const progress = ((currentQuestionIndex + 1) / pythonQuestions.length) * 100;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -68,8 +52,8 @@ export default function JavaScriptQuizPage() {
         {!showResult ? (
           <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
             <Quiz
-              question={currentQuestion.question}
-              options={currentQuestion.options}
+              question={pythonQuestions[currentQuestionIndex].question}
+              options={pythonQuestions[currentQuestionIndex].options}
               handleAnswer={handleAnswer}
               selectedOption={selectedOption}
               setSelectedOption={setSelectedOption}
@@ -79,9 +63,8 @@ export default function JavaScriptQuizPage() {
           <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
             <QuizResult
               correctAnswers={correctAnswers}
-              totalQuestions={totalQuestions}
+              totalQuestions={pythonQuestions.length}
               onRestart={() => {
-                setCurrentSectionIndex(0);
                 setCurrentQuestionIndex(0);
                 setCorrectAnswers(0);
                 setShowResult(false);
