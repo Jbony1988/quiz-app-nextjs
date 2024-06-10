@@ -11,7 +11,7 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
-  const handleAnswer = (event) => {
+  const handleAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (selectedOption === pythonQuestions[currentQuestionIndex].answer) {
       setCorrectAnswers(correctAnswers + 1);
