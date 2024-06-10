@@ -1,10 +1,9 @@
 'use client'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Quiz from './components/Quiz';
 import QuizResult from './components/QuizResult';
 import { pythonQuestions } from './data/data';
-import { javascriptQuestions } from './data/javascriptQuestions';
 
 export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -48,25 +47,30 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
+        className="w-full max-w-2xl" // Set maximum width to prevent overflowing
       >
         {!showResult ? (
-          <Quiz
-            question={pythonQuestions[currentQuestionIndex].question}
-            options={pythonQuestions[currentQuestionIndex].options}
-            handleAnswer={handleAnswer}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-          />
+          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
+            <Quiz
+              question={pythonQuestions[currentQuestionIndex].question}
+              options={pythonQuestions[currentQuestionIndex].options}
+              handleAnswer={handleAnswer}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+          </div>
         ) : (
-          <QuizResult
-            correctAnswers={correctAnswers}
-            totalQuestions={pythonQuestions.length}
-            onRestart={() => {
-              setCurrentQuestionIndex(0);
-              setCorrectAnswers(0);
-              setShowResult(false);
-            }}
-          />
+          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
+            <QuizResult
+              correctAnswers={correctAnswers}
+              totalQuestions={pythonQuestions.length}
+              onRestart={() => {
+                setCurrentQuestionIndex(0);
+                setCorrectAnswers(0);
+                setShowResult(false);
+              }}
+            />
+          </div>
         )}
       </motion.div>
     </div>

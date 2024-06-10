@@ -1,5 +1,5 @@
-'use client';
-import { useState } from 'react';
+'use client'
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Quiz from './Quiz';
 import QuizResult from './QuizResult';
@@ -35,7 +35,12 @@ export default function JavaScriptQuizPage() {
 
   // Calculate progress percentage
   const totalQuestions = javascriptQuestions.reduce((acc, section) => acc + section.questions.length, 0);
-  const answeredQuestions = javascriptQuestions.slice(0, currentSectionIndex).reduce((acc, section) => acc + section.questions.length, 0) + currentQuestionIndex + 1;
+  const answeredQuestions =
+    javascriptQuestions
+      .slice(0, currentSectionIndex)
+      .reduce((acc, section) => acc + section.questions.length, 0) +
+    currentQuestionIndex +
+    1;
   const progress = (answeredQuestions / totalQuestions) * 100;
 
   return (
@@ -58,26 +63,31 @@ export default function JavaScriptQuizPage() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
+        className="w-full max-w-2xl" // Set maximum width to prevent overflowing
       >
         {!showResult ? (
-          <Quiz
-            question={currentQuestion.question}
-            options={currentQuestion.options}
-            handleAnswer={handleAnswer}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-          />
+          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
+            <Quiz
+              question={currentQuestion.question}
+              options={currentQuestion.options}
+              handleAnswer={handleAnswer}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+          </div>
         ) : (
-          <QuizResult
-            correctAnswers={correctAnswers}
-            totalQuestions={totalQuestions}
-            onRestart={() => {
-              setCurrentSectionIndex(0);
-              setCurrentQuestionIndex(0);
-              setCorrectAnswers(0);
-              setShowResult(false);
-            }}
-          />
+          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
+            <QuizResult
+              correctAnswers={correctAnswers}
+              totalQuestions={totalQuestions}
+              onRestart={() => {
+                setCurrentSectionIndex(0);
+                setCurrentQuestionIndex(0);
+                setCorrectAnswers(0);
+                setShowResult(false);
+              }}
+            />
+          </div>
         )}
       </motion.div>
     </div>
