@@ -1,28 +1,9 @@
-// Home.js
 'use client'
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Quiz from './components/Quiz';
 import QuizResult from './components/QuizResult';
-
-const pythonQuestions = [
-  {
-    question: "What is the output of print(2**3)?",
-    options: ["6", "8", "9", "27"],
-    answer: "8",
-  },
-  {
-    question: "What data type is the object below?\nL = [1, 23, 'hello', 1]",
-    options: ["List", "Dictionary", "Tuple", "Array"],
-    answer: "List",
-  },
-  {
-    question: "Which of the following is not a keyword in Python?",
-    options: ["lambda", "eval", "assert", "pass"],
-    answer: "eval",
-  },
-  // Add more questions here...
-];
+import { pythonQuestions } from './data/data';
 
 export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -30,7 +11,7 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
-  const handleAnswer = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleAnswer = (event) => {
     event.preventDefault();
     if (selectedOption === pythonQuestions[currentQuestionIndex].answer) {
       setCorrectAnswers(correctAnswers + 1);
@@ -43,8 +24,24 @@ export default function Home() {
     }
   };
 
+  // Calculate progress percentage
+  const progress = ((currentQuestionIndex + 1) / pythonQuestions.length) * 100;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      {/* Progress bar container */}
+      {!showResult && (
+        <div className="w-full bg-gray-300 h-4 rounded-full mb-6">
+          {/* Animated progress bar */}
+          <motion.div
+            className="bg-blue-500 h-4 rounded-full"
+            style={{ width: `${progress}%` }}
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5 }}
+          />
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

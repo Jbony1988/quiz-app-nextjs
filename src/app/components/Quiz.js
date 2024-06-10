@@ -10,7 +10,7 @@ const Quiz = ({ question, options, handleAnswer, selectedOption, setSelectedOpti
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full"
+        className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full" // Widen the quiz container
       >
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">{question}</h2>
         <div className="grid gap-4">
@@ -27,7 +27,11 @@ const Quiz = ({ question, options, handleAnswer, selectedOption, setSelectedOpti
           ))}
         </div>
         <div className="flex justify-center mt-8"> {/* Center the submit button */}
-          <button onClick={handleAnswer} className="bg-blue-500 text-white px-6 py-3 rounded">
+          <button
+            onClick={handleAnswer}
+            disabled={!selectedOption} // Disable button if no option is selected
+            className={`bg-blue-500 text-white px-6 py-3 rounded ${!selectedOption ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
             Submit Answer
           </button>
         </div>

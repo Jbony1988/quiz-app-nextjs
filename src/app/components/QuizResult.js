@@ -2,19 +2,20 @@
 import { motion } from 'framer-motion';
 
 export default function QuizResult({ correctAnswers, totalQuestions, onRestart }) {
-  const score = correctAnswers * 10;
+  // Calculate the score percentage
+  const percentageCorrect = Math.round((correctAnswers / totalQuestions) * 100);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
-      className="text-center max-w-md mx-auto"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }} // Use easeInOut for smooth transition
+      className="text-center max-w-lg mx-auto" // Widen the result component
     >
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Quiz Result</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Your Score: {score}/{totalQuestions * 10}</h2>
+      <div className="bg-white p-8 rounded-lg shadow-md"> {/* Increased padding for a wider result box */}
+        <h2 className="text-xl font-semibold mb-4">Your Score: {percentageCorrect}%</h2>
         <p className="text-lg text-gray-700 mb-4">
           You got {correctAnswers} out of {totalQuestions} questions correct.
         </p>
