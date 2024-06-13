@@ -1,42 +1,50 @@
 'use client'
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import Quiz from './Quiz';
-import QuizResult from './QuizResult';
-import { javascriptQuestions } from '../data/javascriptQuestions';
+import Quiz from '../-components/Quiz'; // Adjust path based on your project structure
+import { pythonQuestions } from '../data/data'; // Adjust path based on your project structure
 
-export default function JavaScriptQuizPage() {
+const PythonQuizPage = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
+  const router = useRouter();
 
-  const currentSection = javascriptQuestions[currentSectionIndex];
+  const currentSection = pythonQuestions[currentSectionIndex];
   const currentQuestion = currentSection.questions[currentQuestionIndex];
 
-  const handleAnswer = (event) => {
+  const handleAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    // Check if selected option is correct
     if (selectedOption === currentQuestion.answer) {
       setCorrectAnswers(correctAnswers + 1);
     }
 
+    // Check if there are more questions in the current section
     if (currentQuestionIndex < currentSection.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedOption('');
-    } else if (currentSectionIndex < javascriptQuestions.length - 1) {
+    } else if (currentSectionIndex < pythonQuestions.length - 1) {
+      // Move to the next section if available
       setCurrentSectionIndex(currentSectionIndex + 1);
       setCurrentQuestionIndex(0);
       setSelectedOption('');
     } else {
-      setShowResult(true);
+      // All questions answered, navigate to the results page
+      const score = correctAnswers;
+      const total = pythonQuestions.reduce((acc, section) => acc + section.questions.length, 0);
+      router.push(`/assessment-results?score=${score}&total=${total}`);
     }
   };
 
   // Calculate progress percentage
-  const totalQuestions = javascriptQuestions.reduce((acc, section) => acc + section.questions.length, 0);
+  const totalQuestions = pythonQuestions.reduce((acc, section) => acc + section.questions.length, 0);
   const answeredQuestions =
-    javascriptQuestions
+    pythonQuestions
       .slice(0, currentSectionIndex)
       .reduce((acc, section) => acc + section.questions.length, 0) +
     currentQuestionIndex +
@@ -63,10 +71,11 @@ export default function JavaScriptQuizPage() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className="w-full max-w-2xl" // Set maximum width to prevent overflowing
+        className="w-full max-w-2xl"
       >
         {!showResult ? (
-          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
+          <div className="w-full h-full" style={{ width: '80%' }}>
+            {/* Container with 80% width */}
             <Quiz
               question={currentQuestion.question}
               options={currentQuestion.options}
@@ -76,20 +85,13 @@ export default function JavaScriptQuizPage() {
             />
           </div>
         ) : (
-          <div className="w-full h-full" style={{ width: '80%' }}> {/* Container with 80% width */}
-            <QuizResult
-              correctAnswers={correctAnswers}
-              totalQuestions={totalQuestions}
-              onRestart={() => {
-                setCurrentSectionIndex(0);
-                setCurrentQuestionIndex(0);
-                setCorrectAnswers(0);
-                setShowResult(false);
-              }}
-            />
+          <div className="w-full h-full" style={{ width: '80%' }}>
+            {/* Render loading state or other content */}
           </div>
         )}
       </motion.div>
     </div>
   );
-}
+};
+
+export default PythonQuizPage;

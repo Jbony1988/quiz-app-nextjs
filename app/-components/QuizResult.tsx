@@ -1,7 +1,14 @@
 // QuizResult.js
 import { motion } from 'framer-motion';
 
-export default function QuizResult({ correctAnswers, totalQuestions, onRestart }) {
+interface QuizResultProps {
+  correctAnswers: number;
+  totalQuestions: number;
+  onRestart: () => void;
+}
+
+const QuizResult: React.FC<QuizResultProps> = ({ correctAnswers, totalQuestions, onRestart }) => {
+
   // Calculate the score percentage
   const percentageCorrect = Math.round((correctAnswers / totalQuestions) * 100);
 
@@ -29,3 +36,4 @@ export default function QuizResult({ correctAnswers, totalQuestions, onRestart }
     </motion.div>
   );
 }
+export default QuizResult;

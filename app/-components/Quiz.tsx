@@ -1,7 +1,16 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Quiz = ({ question, options, handleAnswer, selectedOption, setSelectedOption }) => {
+interface QuizProps {
+  question: string;
+  options: string[]; // Assuming options are strings
+  handleAnswer: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  selectedOption: string | null; // Assuming selectedOption can be null
+  setSelectedOption: (option: string) => void; // Adjust the type based on the actual function signature
+}
+
+
+const Quiz: React.FC<QuizProps> = ({ question, options = [], handleAnswer, selectedOption, setSelectedOption }) => {
   return (
     <AnimatePresence mode='wait'>
       <motion.div
@@ -14,7 +23,7 @@ const Quiz = ({ question, options, handleAnswer, selectedOption, setSelectedOpti
       >
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">{question}</h2>
         <div className="grid gap-4">
-          {options.map((option, index) => (
+          {options && options.map((option, index) => (
             <button
               key={index}
               onClick={() => setSelectedOption(option)}
