@@ -74,16 +74,15 @@ const PythonQuizPage = () => {
         className="w-full max-w-2xl"
       >
         {!showResult ? (
-          <div className="w-full h-full" style={{ width: '80%' }}>
-            {/* Container with 80% width */}
-            <Quiz
-              question={currentQuestion.question}
-              options={currentQuestion.options}
-              handleAnswer={handleAnswer}
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-            />
-          </div>
+       <div className="w-full sm:w-100 lg:w-100 xl:w-100">
+       <Quiz
+         question={currentQuestion.question}
+         options={currentQuestion.options}
+         handleAnswer={handleAnswer}
+         selectedOption={selectedOption}
+         setSelectedOption={setSelectedOption}
+       />
+     </div>
         ) : (
           <div className="w-full h-full" style={{ width: '80%' }}>
             {/* Render loading state or other content */}
