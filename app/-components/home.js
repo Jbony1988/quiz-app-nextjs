@@ -91,15 +91,15 @@ const Home = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className={`${sharedClasses.card} bg-gray-200`}>
               <p className="text-lg font-bold">John Doe</p>
-              <p className="text-zinc-600 dark:text-zinc-500">"The courses are well-structured and easy to follow."</p>
+              <p className="text-zinc-600 dark:text-zinc-500">&quot;The courses are well-structured and easy to follow.&quot;</p>
             </div>
             <div className={`${sharedClasses.card} bg-gray-200`}>
               <p className="text-lg font-bold">Jane Smith</p>
-              <p className="text-zinc-600 dark:text-zinc-500">"I have learned so much in such a short time."</p>
+              <p className="text-zinc-600 dark:text-zinc-500">&quot;I have learned so much in such a short time.&quot;</p>
             </div>
             <div className={`${sharedClasses.card} bg-gray-200`}>
               <p className="text-lg font-bold">Michael Johnson</p>
-              <p className="text-zinc-600 dark:text-zinc-500">"Highly recommend to anyone looking to improve their skills."</p>
+              <p className="text-zinc-600 dark:text-zinc-500">&quot;Highly recommend to anyone looking to improve their skills.&quot;</p>
             </div>
           </div>
         </div>
