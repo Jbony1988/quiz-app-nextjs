@@ -22,11 +22,11 @@ const Home = () => {
               learning solutions to take your skills to the next level.
             </p>
             <div className="mt-6 flex justify-center sm:items-center lg:justify-end ">
-      {/* Centering on small screens, maintaining space-x-4 for larger screens */}
-      <Link href="/python-quiz">
-        <button className={sharedClasses.button}>Take Coding Assessment</button>
-      </Link>
-    </div>
+              {/* Centering on small screens, maintaining space-x-4 for larger screens */}
+              <Link href="/python-quiz">
+                <button className={sharedClasses.button}>Take Coding Assessment</button>
+              </Link>
+            </div>
           </div>
           <div className="relative lg:ml-12">
             <img
