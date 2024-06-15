@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import Link from 'next/link';
 
@@ -22,7 +21,7 @@ const Home = () => {
               Our e-learning programs have been developed to be a vehicle of delivering multimedia
               learning solutions to take your skills to the next level.
             </p>
-            <div className="mt-6 flex justify-center sm:items-center lg:justify-start ">
+            <div className="mt-6 flex justify-center sm:items-center lg:justify-end ">
       {/* Centering on small screens, maintaining space-x-4 for larger screens */}
       <Link href="/python-quiz">
         <button className={sharedClasses.button}>Take Coding Assessment</button>
