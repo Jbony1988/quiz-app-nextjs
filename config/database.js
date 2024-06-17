@@ -10,24 +10,40 @@ const client = new MongoClient(uri, {
   }
 });
 
-
-const connectDB = async () => {
-
-
-  // If the database is already connected, don't connect again
-
-
-  // Connect to MongoDB
+ async function run() {
   try {
+    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } catch (error) {
+    console.log("Pinged your deployment. You successfully connected to MongoDB!", client);
+  } finally {
+    // Ensures that the client will close when you finish/error
     await client.close();
   }
-};
+}
+run().catch(console.dir);
 
-export default connectDB;
+
+
+// const connectDB = async () => {
+
+
+//   // If the database is already connected, don't connect again
+
+
+//   // Connect to MongoDB
+//   try {
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+//   } catch (error) {
+//     await client.close();
+//   }
+// };
+
+// export default connectDB;
 
 
