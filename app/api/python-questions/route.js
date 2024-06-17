@@ -1,7 +1,7 @@
 import connectDB from "../../../config/database"
 export const GET = async (request) => {
     try {
-        // await connectDB()
+        await connectDB()
         return new Response(JSON.stringify({MESSAGE: 'hELLO WORLD'}), {status:200})
     } catch (error) {
         console.log(error)
