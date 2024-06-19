@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvder from './-components/AuthProvider'
-import Navbar from './-components/Navbar'; // Adjust the import to match your file naming convention
+import Navbar from './-components/navbar'; // Adjust the import to match your file naming convention
 
 const inter = Inter({ subsets: ["latin"] });
 
