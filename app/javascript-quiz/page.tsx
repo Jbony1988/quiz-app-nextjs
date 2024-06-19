@@ -1,7 +1,7 @@
 // pages/javascript-quiz.tsx
 
 import React from 'react';
-import JavascriptQuizPage from '../-components/javascriptQuizPage';
+import JavascriptQuizPage from '../-components/JavascriptQuizPage';
 
 const JavascriptQuiz = () => {
   return (
