@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const NAV_LINKS = [
   { text: "Programming Assessment", href: "/python-quiz" },
@@ -21,6 +22,8 @@ const NAV_CLASSES = {
 };
 
 const Navbar = () => {
+
+  const {data: session} = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -67,20 +70,20 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {!isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.loginBtn} hidden md:block`}>
+          {session === null && (
+            <Link href="/register" className={`${NAV_CLASSES.loginBtn} hidden md:block`}>
               Log in
             </Link>
           )}
 
-          {!isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
+          {session === null && (
+            <Link href="/login" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
               Sign up
             </Link>
           )}
 
-          {isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
+          {session && (
+            <Link href="/dashboard" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
               Dashboard
             </Link>
           )}
