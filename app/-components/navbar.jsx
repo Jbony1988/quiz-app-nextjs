@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from 'next/image';
+
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const NAV_LINKS = [
@@ -22,8 +24,7 @@ const NAV_CLASSES = {
 };
 
 const Navbar = () => {
-
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -37,12 +38,19 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  const signOutHandler = () => {
+    closeMobileMenu()
+    signOut()
+  }
+
   return (
     <nav className="bg-white fixed top-0 left-0 right-0 z-50 shadow-md">
       <div className={NAV_CLASSES.container}>
         <div className="flex items-center space-x-4">
-        <Link href="/">
-            <img
+          <Link href="/">
+            <Image
+            width='400'
+            height='400'
               src="https://placehold.co/40x40"
               alt="Logo"
               className={`${NAV_CLASSES.logo} hidden md:block`}
@@ -71,20 +79,40 @@ const Navbar = () => {
         </div>
         <div className="flex items-center space-x-4">
           {session === null && (
-            <Link href="/register" className={`${NAV_CLASSES.loginBtn} hidden md:block`}>
+            <Link
+              href="/register"
+              className={`${NAV_CLASSES.loginBtn} hidden md:block`}
+            >
               Log in
             </Link>
           )}
 
           {session === null && (
-            <Link href="/login" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
+            <Link
+              href="/login"
+              className={`${NAV_CLASSES.signupBtn} hidden md:block`}
+            >
               Sign up
             </Link>
           )}
 
           {session && (
-            <Link href="/dashboard" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
+            <Link
+              href="/dashboard"
+              className={`${NAV_CLASSES.signupBtn} hidden md:block`}
+            >
               Dashboard
+            </Link>
+          )}
+           {session && (
+            <Link
+              href="/"
+              className={NAV_CLASSES.signupBtn}
+              onClick={() => {
+                signOutHandler()
+              }}
+            >
+             Sign Out
             </Link>
           )}
 
@@ -114,21 +142,44 @@ const Navbar = () => {
             </Link>
           ))}
 
-          {!isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.loginBtn} onClick={closeMobileMenu}>
+          {!session && (
+            <Link
+              href="#"
+              className={NAV_CLASSES.loginBtn}
+              onClick={closeMobileMenu}
+            >
               Log in
             </Link>
           )}
 
-          {!isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.signupBtn} onClick={closeMobileMenu}>
+          {!session && (
+            <Link
+              href="#"
+              className={NAV_CLASSES.signupBtn}
+              onClick={closeMobileMenu}
+            >
               Sign up
             </Link>
           )}
 
-          {isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.signupBtn} onClick={closeMobileMenu}>
+          {session && (
+            <Link
+              href="/dashboard"
+              className={NAV_CLASSES.signupBtn}
+              onClick={closeMobileMenu}
+            >
               Dashboard
+            </Link>
+          )}
+             {session && (
+            <Link
+              href="/"
+              className={NAV_CLASSES.signupBtn}
+              onClick={() => {
+                signOutHandler()
+              }}
+            >
+             Sign Out
             </Link>
           )}
         </div>
