@@ -25,7 +25,36 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
 
+.line {
+  width: 24px;
+  height: 2px;
+  background-color: black;
+  transition: all 0.3s linear;
+}
+
+.open .top {
+  transform: rotate(45deg);
+  transform-origin: 5% 50%;
+}
+
+.open .middle {
+  opacity: 0;
+}
+
+.open .bottom {
+  transform: rotate(-45deg);
+  transform-origin: 5% 50%;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

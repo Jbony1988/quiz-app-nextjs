@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from 'next/image';
+import logo from '../assets/techluminate-logo-e1707169416639.png';
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const NAV_LINKS = [
   { text: "Programming Assessment", href: "/python-quiz" },
@@ -21,11 +24,13 @@ const NAV_CLASSES = {
 };
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  const profileImage = session?.user?.image
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const pathname = usePathname();
-
+  const profileDefault = 'https://placehold.co/40x40'
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -34,6 +39,20 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+  };
+
+  const signOutHandler = () => {
+    closeMobileMenu();
+    signOut();
+  };
+
+  console.log(session, profileImage)
   return (
     <nav className="bg-white fixed top-0 left-0 right-0 z-50 shadow-md">
       <div className={NAV_CLASSES.container}>
@@ -46,8 +65,10 @@ const Navbar = () => {
             />
           </Link>
           <Link href="/" onClick={closeMobileMenu}>
-            <img
-              src="https://placehold.co/40x40"
+            <Image
+              width={40}
+              height={40}
+              src={logo}
               alt="Logo"
               className={`${NAV_CLASSES.logo} md:hidden`}
             />
@@ -72,30 +93,62 @@ const Navbar = () => {
               Log in
             </Link>
           )}
-
-          {!isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
-              Sign up
-            </Link>
+          {session && (
+            <div className="relative hidden md:block">
+              <Image
+              width={40}
+              height={40}
+                src={profileImage || profileDefault}
+                alt="Profile"
+                className={NAV_CLASSES.profileIcon}
+                onClick={toggleDropdown}
+              />
+              {dropdownOpen && (
+                <div className={NAV_CLASSES.dropdownMenu}>
+                  <Link
+                    href="/profile"
+                    className={NAV_CLASSES.dropdownItem}
+                    onClick={closeDropdown}
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className={NAV_CLASSES.dropdownItem}
+                    onClick={closeDropdown}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/settings"
+                    className={NAV_CLASSES.dropdownItem}
+                    onClick={closeDropdown}
+                  >
+                    Settings
+                  </Link>
+                  <Link
+                    href="/"
+                    className={NAV_CLASSES.dropdownItem}
+                    onClick={signOutHandler}
+                  >
+                    Sign Out
+                  </Link>
+                </div>
+              )}
+            </div>
           )}
 
-          {isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.signupBtn} hidden md:block`}>
-              Dashboard
-            </Link>
-          )}
-
-          <button
+          <div
             id="menuBtn"
-            className={NAV_CLASSES.menuBtn}
+            className="p-2 md:hidden"
             onClick={toggleMobileMenu}
           >
-            <img
-              src="https://placehold.co/30x30"
-              alt="Menu"
-              className="w-6 h-6"
-            />
-          </button>
+            <div className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
+              <span className="line top bg-black"></span>
+              <span className="line middle bg-black"></span>
+              <span className="line bottom bg-black"></span>
+            </div>
+          </div>
         </div>
       </div>
       {mobileMenuOpen && (
