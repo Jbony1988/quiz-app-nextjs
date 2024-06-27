@@ -15,19 +15,21 @@ const NAV_CLASSES = {
   container: "container mx-auto flex justify-between items-center p-4",
   logo: "w-8 h-8",
   menuBtn: "text-gray-700 hover:text-blue-500 focus:outline-none md:hidden",
-  mobileMenu:
-    "md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 flex flex-col items-center space-y-4",
+  mobileMenu: "md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 flex flex-col items-center space-y-4",
   navLink: "text-gray-700 hover:text-blue-500",
   mobileNavLink: "block text-gray-700 hover:text-blue-500 py-2",
   loginBtn: "text-gray-700 hover:text-blue-500",
   signupBtn: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600",
+  profileIcon: "w-8 h-8 rounded-full cursor-pointer",
+  dropdownMenu: "absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1",
+  dropdownItem: "block px-4 py-2 text-gray-700 hover:bg-gray-100",
 };
 
 const Navbar = () => {
   const { data: session } = useSession();
   const profileImage = session?.user?.image
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const pathname = usePathname();
   const profileDefault = 'https://placehold.co/40x40'
@@ -57,9 +59,11 @@ const Navbar = () => {
     <nav className="bg-white fixed top-0 left-0 right-0 z-50 shadow-md">
       <div className={NAV_CLASSES.container}>
         <div className="flex items-center space-x-4">
-        <Link href="/">
-            <img
-              src="https://placehold.co/40x40"
+          <Link href="/">
+            <Image
+              width="40"
+              height="40"
+              src={logo}
               alt="Logo"
               className={`${NAV_CLASSES.logo} hidden md:block`}
             />
@@ -88,10 +92,21 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {!isLoggedIn && (
-            <Link href="#" className={`${NAV_CLASSES.loginBtn} hidden md:block`}>
-              Log in
-            </Link>
+          {!session && (
+            <>
+              <Link
+                href="/register"
+                className={`${NAV_CLASSES.loginBtn} hidden md:block`}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/login"
+                className={`${NAV_CLASSES.signupBtn} hidden md:block`}
+              >
+                Sign up
+              </Link>
+            </>
           )}
           {session && (
             <div className="relative hidden md:block">
@@ -158,28 +173,60 @@ const Navbar = () => {
               key={index}
               href={link.href}
               className={NAV_CLASSES.mobileNavLink}
-              onClick={closeMobileMenu} // Close the mobile menu on click
+              onClick={closeMobileMenu}
             >
               {link.text}
             </Link>
           ))}
-
-          {!isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.loginBtn} onClick={closeMobileMenu}>
-              Log in
-            </Link>
+          {!session && (
+            <>
+              <Link
+                href="/register"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={closeMobileMenu}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/login"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={closeMobileMenu}
+              >
+                Sign up
+              </Link>
+            </>
           )}
-
-          {!isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.signupBtn} onClick={closeMobileMenu}>
-              Sign up
-            </Link>
-          )}
-
-          {isLoggedIn && (
-            <Link href="#" className={NAV_CLASSES.signupBtn} onClick={closeMobileMenu}>
-              Dashboard
-            </Link>
+          {session && (
+            <>
+              <Link
+                href="/profile"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={closeMobileMenu}
+              >
+                Profile
+              </Link>
+              <Link
+                href="/dashboard"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={closeMobileMenu}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/settings"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={closeMobileMenu}
+              >
+                Settings
+              </Link>
+              <Link
+                href="/"
+                className={NAV_CLASSES.mobileNavLink}
+                onClick={signOutHandler}
+              >
+                Sign Out
+              </Link>
+            </>
           )}
         </div>
       )}

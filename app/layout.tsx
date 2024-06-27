@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AuthProvder from './-components/AuthProvider'
 import Navbar from './-components/navbar'; // Adjust the import to match your file naming convention
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,11 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <AuthProvder>
+ <html lang="en">
       <body className={inter.className}>
         <Navbar />
         <main>{children}</main>
       </body>
     </html>
+    </AuthProvder>
+   
   );
 }
