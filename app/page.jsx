@@ -6,8 +6,8 @@ const HomePage  = async  () => {
 
   return (
     <div>
-      {/* <Home/> */}
-  <Login/>
+      <Home/>
+  {/* <Login/> */}
 
     </div>
   );
