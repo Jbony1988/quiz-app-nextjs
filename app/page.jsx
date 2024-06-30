@@ -7,7 +7,7 @@ const HomePage  = async  () => {
   return (
     <div>
       <Home/>
-  {/* <Login/> */}
+
 
     </div>
   );
