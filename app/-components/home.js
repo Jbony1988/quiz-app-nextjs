@@ -56,33 +56,25 @@ const Home = () => {
         <h2
           className={`${sharedClasses.textColor} text-3xl font-bold text-center`}
         >
-          Browse Top Coding Languages
+          Python Course Coming Soon
         </h2>
         <div className="mt-8 flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <CourseBlocks
-              courseName={"JavaScript"}
-              styles={
-                "bg-purple-500 text-white text-center py-12 px-6 rounded-lg shadow-lg hover:bg-purple-600 transition duration-300"
-              }
-              sharedClasses={sharedClasses.card}
-            />
-            <CourseBlocks
-              courseName={"Python"}
-              styles={
-                "bg-blue-500 text-white text-center py-12 px-6 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
-              }
-              sharedClasses={sharedClasses.card}
-            />
-            <CourseBlocks
-              courseName={"WordPress"}
-              styles={
-                "bg-blue-500 text-white text-center py-12 px-6 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
-              }
-              sharedClasses={sharedClasses.card}
-            />
-          </div>
-        </div>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center max-w-6xl w-full">
+    <div className="text-left">
+      <h2 className="text-2xl font-bold mb-4">Your Headline Here</h2>
+      <p className="text-gray-600">
+        Your text content goes here. You can add multiple paragraphs or other elements as needed.
+      </p>
+    </div>
+    <div className="flex justify-center sm:justify-end">
+      <img 
+        src="/path-to-your-image.jpg" 
+        alt="Description of the image" 
+        className="max-w-full h-auto rounded-lg shadow-lg"
+      />
+    </div>
+  </div>
+</div>
       </div>
 
       <div className="bg-gray-100 py-12">
